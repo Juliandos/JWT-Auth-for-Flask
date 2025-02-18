@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 from extensions import db, jwt
-# from auth import auth_bp
+from auth import auth_bp
 # from users import user_bp
 # from models import User, TokenBlocklist
 
@@ -15,7 +15,7 @@ def create_app():
     # jwt.init_app(app)
 
     # # register bluepints
-    # app.register_blueprint(auth_bp, url_prefix="/auth")
+    app.register_blueprint(auth_bp, url_prefix="/auth")
     # app.register_blueprint(user_bp, url_prefix="/users")
 
     # # load user
