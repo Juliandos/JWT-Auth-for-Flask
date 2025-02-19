@@ -1,1 +1,9 @@
 set FLASK_APP=main.py
+flask run
+
+Para migrar la db se hace esto:
+    - python
+    - from models import TokenBlocklist
+    - from models import User
+    - db
+    - db.create_all()
