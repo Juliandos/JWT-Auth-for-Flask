@@ -33,39 +33,39 @@ def create_app():
     #         return {"is_staff": True}
     #     return {"is_staff": False}
 
-    # # jwt error handlers
+    # jwt error handlers
 
-    # @jwt.expired_token_loader
-    # def expired_token_callback(jwt_header, jwt_data):
-    #     return jsonify({"message": "Token has expired", "error": "token_expired"}), 401
+    @jwt.expired_token_loader
+    def expired_token_callback(jwt_header, jwt_data):
+        return jsonify({"message": "Token has expired", "error": "token_expired"}), 401
 
-    # @jwt.invalid_token_loader
-    # def invalid_token_callback(error):
-    #     return (
-    #         jsonify(
-    #             {"message": "Signature verification failed", "error": "invalid_token"}
-    #         ),
-    #         401,
-    #     )
+    @jwt.invalid_token_loader
+    def invalid_token_callback(error):
+        return (
+            jsonify(
+                {"message": "Signature verification failed", "error": "invalid_token"}
+            ),
+            401,
+        )
 
-    # @jwt.unauthorized_loader
-    # def missing_token_callback(error):
-    #     return (
-    #         jsonify(
-    #             {
-    #                 "message": "Request doesnt contain valid token",
-    #                 "error": "authorization_header",
-    #             }
-    #         ),
-    #         401,
-    #     )
+    @jwt.unauthorized_loader
+    def missing_token_callback(error):
+        return (
+            jsonify(
+                {
+                    "message": "Request doesnt contain valid token",
+                    "error": "authorization_header",
+                }
+            ),
+            401,
+        )
     
-    # @jwt.token_in_blocklist_loader
-    # def token_in_blocklist_callback(jwt_header,jwt_data):
-    #     jti = jwt_data['jti']
+    @jwt.token_in_blocklist_loader
+    def token_in_blocklist_callback(jwt_header,jwt_data):
+        jti = jwt_data['jti']
 
-    #     token = db.session.query(TokenBlocklist).filter(TokenBlocklist.jti == jti).scalar()
+        token = db.session.query(TokenBlocklist).filter(TokenBlocklist.jti == jti).scalar()
 
-    #     return token is not None
+        return token is not None
 
     return app
